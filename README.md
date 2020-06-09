@@ -34,6 +34,12 @@ cd crf-motion-seg-master/
 
 ## Camera Motion Estimation
 
+## Differences from the Official paper
+Commit abcdef follows the implementation of the hierarchical-motion-segmentation paper. Later on further improvments have been made mostly for camera motion estimation. Deviations from the main paper are the following:
+* **Improved rotation compensation in 3D:**
+* **More robust (but slower) optimization procedure:**
+
+
 ## Citation
 Use this bibtex to cite this repository:
 ```
