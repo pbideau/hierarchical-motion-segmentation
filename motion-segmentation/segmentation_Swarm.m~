@@ -1,4 +1,4 @@
-function [] = segmentation_Swarm(varargin)
+function [] = segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathResult, loadInitRANSAC, varargin)
     
     % Loading optional arguments
     object_bool = true;
@@ -6,7 +6,8 @@ function [] = segmentation_Swarm(varargin)
     while ~isempty(varargin)
         switch lower(varargin{1})
               case 'object'
-                  object_bool = varargin{2};
+                  pathObjectSegmentations = varargin{2};
+                  object_bool = true;
               otherwise
                   error(['Unexpected option: ' varargin{1}])
         end
@@ -59,23 +60,15 @@ function [] = segmentation_Swarm(varargin)
         listFrames{i} = strcat(pathFrames,  listFrames{i});
     end
 
-    %% load all groundtruth paths
-    listGroundtruth = [dir(fullfile(pathGroundtruth, '*.pgm')); dir(fullfile(pathGroundtruth, '*.png'))];
-    listGroundtruth = extractfield(listGroundtruth, 'name')';
-
-    for i = 1:length(listGroundtruth)
-        listGroundtruth{i} = strcat(pathGroundtruth,  listGroundtruth{i});
-    end
-
     %% run segmentation
     [SegmentationCell, TransIdealCell, TransCell] = ...
-        runSegmentation( listFlow, listFrames, pathResultObjectProb, pathResultRigidMotionsProb, pathResult, LookUpLikelihood, pathObjectSegmentations, pathCodeCRF, object_bool);
+        runSegmentation( listFlow, listFrames, pathResultObjectProb, pathResultRigidMotionsProb, pathResult, LookUpLikelihood, pathObjectSegmentations, pathCodeCRF, object_bool, loadInitRANSAC);
 
     fprintf( 'Segmentation finished\n' );
 
     %% create 4 panel video
     fprintf( 'Creating segmentation video...\n' );
-    createOverlayVideo_4panel(listFrames, SegmentationCell, TransIdealCell, TransCell, pathResult, u, j);
+    createOverlayVideo_4panel(listFrames, SegmentationCell, TransIdealCell, TransCell, pathResult);
 
     %% save (rigid) motion segmentations as png
     fprintf('save (rigid) motion segmentation as png... \n');

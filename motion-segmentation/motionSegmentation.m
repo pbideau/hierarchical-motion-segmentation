@@ -134,6 +134,7 @@ for i=1:numFlow
     % ------------------------------------------------------------------------- 
     [bgMaskPosterior, fgMaskPosterior, newMaskPosterior] = ...
         computePosterior( likelihood_bg, likelihood_fg, likelihood_newMotion, bgPrior, fgPrior, n-1, newPrior);
+    
     bgPosterior_crf = improve_posteriors_crf( INPUT_IMAGE_FILE, INPUT_PROB_MOTION_MAT_FILE, OUTPUT_PROB_MOTION_MAT_FILE, bgMaskPosterior, path );
     
     AllPosteriors = cat(3, newMaskPosterior, fgMaskPosterior, bgMaskPosterior);

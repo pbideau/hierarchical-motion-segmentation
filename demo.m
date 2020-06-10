@@ -1,16 +1,26 @@
 % ----------------------------------------------------------------
 % setup VLFeat
 % ----------------------------------------------------------------
-run('/home/pia/Documents/MATLAB/utils/vlfeat-0.9.20/toolbox/vl_setup')
+run('./utils/vlfeat-0.9.20/toolbox/vl_setup')
+
+% ----------------------------------------------------------------
+% add path to motion segmentation code
+% ----------------------------------------------------------------
+addpath(genpath('./motion-segmentation'))
 
 % ----------------------------------------------------------------
 % specify your directories
 % ----------------------------------------------------------------
-pathCodeCRF = '/home/pia/Documents/MATLAB/motion_git/utils/crf-motion-seg';
-pathFrames = '/home/pia/Documents/data/complexBackground-multilabel/Images/forest/';
-pathFlow   = '/home/pia/Documents/data/complexBackground-multilabel/OpticalFlow-classicNL/forest/';
-pathObjectSegmentations = '/home/pia/Documents/data/complexBackground-multilabel/deepmask/forest/';
-pathResult = '/home/pia/Documents/data/complexBackground-multilabel/Results/forest/';
+pathCodeCRF = './utils/crf-motion-seg-master';
+pathFrames = './samples/images/forest/';
+pathFlow   = './samples/flow-classicNL/forest/';
+pathObjectSegmentations = './samples/objectMasks/forest/';
+pathResult = './samples/results/forest/';
+
+% set this variable to true load precomputed initialization results already
+% exist. If you run the code for the first time on a certain video you
+% should set the calue to false.
+loadInitRANSAC = true;
 
 % ----------------------------------------------------------------
 % motion segmentation using precomputed object semgnetation masks
@@ -23,6 +33,6 @@ pathResult = '/home/pia/Documents/data/complexBackground-multilabel/Results/fore
 % segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathGroundtruth, pathResult)
 %
 % ----------------------------------------------------------------
-segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathResult, 'object', pathObjectSegmentations)
+segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathResult, loadInitRANSAC, 'object', pathObjectSegmentations)
 
 

@@ -1,4 +1,4 @@
-function [ ] = createOverlayVideo_4panel(dirFrames, SegmentationCell, TransIdealCell, TransCell, dirVideo, u, j)
+function [ ] = createOverlayVideo_4panel(dirFrames, SegmentationCell, TransIdealCell, TransCell, dirVideo)
 % INPUT: SegmentationCell segmentations (numx1 cell array)     
 %        firstidxOF       number of first frame (mostly 1)    
 %        lastidxOF        number of last frame-1 
@@ -27,7 +27,7 @@ colorList(12,:) = [1, 0.9 , 0];
 colorList(13,:) = [1, 0 , 0];
 
 %videoname  = sprintf('%s_rndStartSGD_%03d.%s', video, focallength_sensorwidth,  'avi');
-outputVideo = VideoWriter(fullfile(dirVideo, sprintf('segmentation-depth-%03d-%03d.avi', u, j)));
+outputVideo = VideoWriter(fullfile(dirVideo, 'video.avi'));
 outputVideo.FrameRate = 15;
 open(outputVideo);
 numFrames = length(dirFrames)-1;
@@ -105,10 +105,10 @@ for i = 1:numFrames
     RotadjustedAF = round((cell2mat(TransCell(i,1))+1).*(255/361));
     RotadjustedAF = reshape(C(RotadjustedAF, :), [size(RotadjustedAF) 3]);
     
-    %origImg = insertText(origImg, [1 20], 'original video','FontSize', 22, 'BoxColor', 'black', 'BoxOpacity', 0.6, 'TextColor', 'white');
-    %overlay = insertText(overlay, [1 20], 'our Method','FontSize', 22, 'BoxColor', 'black', 'BoxOpacity', 0.6, 'TextColor', 'white');
-    %TransAF_ideal_bg = insertText(TransAF_ideal_bg, [1 20], 'angle field (translational camera motion)','FontSize', 22, 'BoxColor', 'black', 'BoxOpacity', 0.6, 'TextColor', 'white');
-    %RotadjustedAF = insertText(RotadjustedAF, [1 20], 'observed angle field','FontSize', 22, 'BoxColor', 'black', 'BoxOpacity', 0.6, 'TextColor', 'white');
+    origImg = insertText(origImg, [1 20], 'original video','FontSize', 28, 'BoxColor', 'black', 'BoxOpacity', 0.6, 'TextColor', 'white');
+    overlay = insertText(overlay, [1 20], 'our Method','FontSize', 28, 'BoxColor', 'black', 'BoxOpacity', 0.6, 'TextColor', 'white');
+    TransAF_ideal_bg = insertText(TransAF_ideal_bg, [1 20], 'angle field (translational camera motion)','FontSize', 28, 'BoxColor', 'black', 'BoxOpacity', 0.6, 'TextColor', 'white');
+    RotadjustedAF = insertText(RotadjustedAF, [1 20], 'observed angle field (rotation compensated)','FontSize', 28, 'BoxColor', 'black', 'BoxOpacity', 0.6, 'TextColor', 'white');
 
     frame = [im2uint8(origImg) im2uint8(overlay); im2uint8(TransAF_ideal_bg) im2uint8(RotadjustedAF)];%; im2uint8(AngelDif) im2uint8(Magn)];
     writeVideo(outputVideo, frame);

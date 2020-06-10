@@ -1,4 +1,4 @@
-function [] = segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathResult, varargin)
+function [] = segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathResult, loadInitRANSAC, varargin)
     
     % Loading optional arguments
     object_bool = true;
@@ -62,13 +62,13 @@ function [] = segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathResult, 
 
     %% run segmentation
     [SegmentationCell, TransIdealCell, TransCell] = ...
-        runSegmentation( listFlow, listFrames, pathResultObjectProb, pathResultRigidMotionsProb, pathResult, LookUpLikelihood, pathObjectSegmentations, pathCodeCRF, object_bool);
+        runSegmentation( listFlow, listFrames, pathResultObjectProb, pathResultRigidMotionsProb, pathResult, LookUpLikelihood, pathObjectSegmentations, pathCodeCRF, object_bool, loadInitRANSAC);
 
     fprintf( 'Segmentation finished\n' );
 
     %% create 4 panel video
     fprintf( 'Creating segmentation video...\n' );
-    createOverlayVideo_4panel(listFrames, SegmentationCell, TransIdealCell, TransCell, pathResult, u, j);
+    createOverlayVideo_4panel(listFrames, SegmentationCell, TransIdealCell, TransCell, pathResult);
 
     %% save (rigid) motion segmentations as png
     fprintf('save (rigid) motion segmentation as png... \n');

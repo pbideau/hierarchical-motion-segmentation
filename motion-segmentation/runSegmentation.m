@@ -1,12 +1,12 @@
 function [SegmentationCell, TransIdealCell, TransCell] = ...
-        runSegmentation( dirFlow, dirFrame, pathObjectProb, pathResultRigidMotions, dirResult, LookUpLikelihood, pathSharpmask, path, object_bool) 
+        runSegmentation( dirFlow, dirFrame, pathObjectProb, pathResultRigidMotions, dirResult, LookUpLikelihood, pathSharpmask, path, object_bool, loadInitRANSAC) 
 %
 %        Do you want to run the code including RANSAC initialization? 
 %        if yes set RANSAC true
          RANSAC = true;
 %        Do you want to use precomputed results of the RANSAC initialization?
 %        if yes set RANSACcomputed true
-         precomputedVal = true;
+         precomputedVal = loadInitRANSAC;
 %--------------------------------------------------------------------------
 
     if (RANSAC == false)
