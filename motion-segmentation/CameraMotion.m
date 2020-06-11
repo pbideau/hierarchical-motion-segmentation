@@ -1,4 +1,4 @@
-function [ rotation_ABC, translation_UVW, fval] = CameraMotion( OF, mask, RotValue_prev, focallength )
+function [ rotation_ABC, translation_UVW] = CameraMotion( OF, mask, RotValue_prev, focallength )
 % INPUT: OF             optical flow (heightxwidthx2 matrix)
 %        u, v           values of the optical flow OF(:,:,1) and OF(:,:,2), 
 %                       which belong to a single motion like background.
@@ -31,7 +31,7 @@ function [ rotation_ABC, translation_UVW, fval] = CameraMotion( OF, mask, RotVal
     %--------------------------------------------------------------------------
     f = @(x)fcn_to_minimize(x, uv, x_comp_idx, y_comp_idx, focallength);
     options = optimset('LargeScale','off', 'Display', 'off');
-    [rotation_ABC, fval, ~] = fminunc( f, RotValue_prev, options); 
+    [rotation_ABC, ~, ~] = fminunc( f, RotValue_prev, options); 
 
     [RotOF] = getRotofOF( rotation_ABC, x_comp_idx, y_comp_idx, focallength);
     RotadjustedOF = uv - RotOF;

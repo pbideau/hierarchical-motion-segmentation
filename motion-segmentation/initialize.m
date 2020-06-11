@@ -48,7 +48,7 @@ for loopRANSAC = 1:5000
     
         patch = bucketing( segments, bucket_matrix );
     
-        [rotation_ABC_current, translation_UVW_current, ~] = CameraMotion( OF, patch, [0 0 0], focallength_px );
+        [rotation_ABC_current, translation_UVW_current] = CameraMotion( OF, patch, [0 0 0], focallength_px );
         
         [RotOF] = getRotofOF( rotation_ABC_current, x_comp, y_comp, focallength_px);
         RotadjustedOF_current = OF - RotOF;

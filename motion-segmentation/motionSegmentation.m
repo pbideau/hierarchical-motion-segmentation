@@ -91,7 +91,7 @@ for i=1:numFlow
         % computation of the camera motion given the optical flow of frame i and i+1 and a
         % mask (1-ImgSegmented), which is an estimate for static background.
         % -------------------------------------------------------------------------
-        [ rotation_ABC, translation_UVW, ~] = CameraMotion( OF, bg_mask, rotation_ABC, focallength_px );
+        [ rotation_ABC, translation_UVW] = CameraMotion( OF, bg_mask, rotation_ABC, focallength_px );
         
         [RotOF] = getRotofOF( rotation_ABC, x_comp, y_comp, focallength_px);
         RotadjustedOF = OF - RotOF;
