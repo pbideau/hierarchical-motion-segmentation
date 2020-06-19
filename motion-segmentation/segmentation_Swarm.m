@@ -72,7 +72,7 @@ function [] = segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathResult, 
 
     %% save (rigid) motion segmentations as png
     fprintf('save (rigid) motion segmentation as png... \n');
-    for i = 1:length(SegmentationCell)
+    for i = 1:length(TransIdealCell)
         segmentationOrig = uint8(cell2mat(SegmentationCell(i,3)));
         imwrite(segmentationOrig, sprintf('%s%s%05d.png',pathResult, 'rigidMotions/', i));
     end
@@ -80,7 +80,7 @@ function [] = segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathResult, 
     %% save moving object segmentations as png
     if object_bool == true
         fprintf('save moving object segmentation as png... \n');
-        for i = 1:length(SegmentationCell)
+        for i = 1:length(TransIdealCell)
             segmentationOrig = uint8(cell2mat(SegmentationCell(i,2)));
             imwrite(segmentationOrig, sprintf('%s%s%05d.png',pathResult, 'objectMotions/', i));
         end
