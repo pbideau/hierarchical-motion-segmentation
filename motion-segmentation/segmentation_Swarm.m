@@ -3,6 +3,11 @@ function [] = segmentation_Swarm(pathCodeCRF, pathFrames, pathFlow, pathResult, 
     % Loading optional arguments
     object_bool = true;
     
+    if isempty(varargin)
+        pathObjectSegmentations = [];
+        object_bool = false;
+    end
+    
     while ~isempty(varargin)
         switch lower(varargin{1})
               case 'object'

@@ -135,7 +135,7 @@ for i=1:numFlow
     [bgMaskPosterior, fgMaskPosterior, newMaskPosterior] = ...
         computePosterior( likelihood_bg, likelihood_fg, likelihood_newMotion, bgPrior, fgPrior, n-1, newPrior);
     
-    bgPosterior_crf = improve_posteriors_crf( INPUT_IMAGE_FILE, INPUT_PROB_MOTION_MAT_FILE, OUTPUT_PROB_MOTION_MAT_FILE, bgMaskPosterior, path );
+    bgPosterior_crf = improve_posteriors_crf( INPUT_IMAGE_FILE, INPUT_PROB_MOTION_MAT_FILE, OUTPUT_PROB_MOTION_MAT_FILE, cat(3, bgMaskPosterior, fgMaskPosterior, newMaskPosterior), path );
     
     AllPosteriors = cat(3, newMaskPosterior, fgMaskPosterior, bgMaskPosterior);
     [~, ind] = sort(AllPosteriors, 3);
@@ -208,9 +208,9 @@ for i=1:numFlow
         end
     else
         sharpmask_segmentation = [];
-        objectSegmentation = [];
+        objectSegmentation = segmentation_labelsTracked>1; % same as motion only
         objectProposals_mask = [];
-        posterior_object = [];
+        posterior_object = bgPosterior_crf(:,:,1);
     end
     
     ImgSegmented(ind(:,:,n+1)==max(max(ind(:,:,n+1)))) = 1;
